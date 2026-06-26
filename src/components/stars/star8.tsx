@@ -9,7 +9,7 @@ export const Star8 = ({
 }) => {
   return (
     <Star8Component
-      className={`absolute ${position} text-[var(--main)]`}
+      className={`absolute ${position} text-[var(--main)] z-[-1]`}
       size={size}
       stroke="black"
       strokeWidth={0}
