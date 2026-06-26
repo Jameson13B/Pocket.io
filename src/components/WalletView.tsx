@@ -81,15 +81,11 @@ export const WalletView = ({
 
         <TransactionLog id={bankCode} />
 
-        <Star8 color="purple" position="bottom-0 right-1" size={75} />
-        <Star8 color="purple" position="bottom-9 right-18" />
-        <Star8 color="purple" position="bottom-20 right-12" size={35} />
-        <Star8 color="purple" position="bottom-[13%] left-[-45px]" size={250} />
-        <Star8
-          color="purple"
-          position="bottom-[45%] left-[45%] z-[-1]"
-          size={350}
-        />
+        <Star8 position="bottom-0 right-1" size={75} />
+        <Star8 position="bottom-9 right-18" />
+        <Star8 position="bottom-20 right-12" size={35} />
+        <Star8 position="bottom-[13%] left-[-45px]" size={250} />
+        <Star8 position="bottom-[45%] left-[45%] z-[-1]" size={350} />
       </Card.Content>
     </Card>
   )
