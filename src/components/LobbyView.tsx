@@ -71,9 +71,9 @@ export const LobbyView = ({
             startingBalance: startingBalance,
           }),
           {
-            loading: "Creating new bank...",
-            success: "Bank created successfully",
-            error: "Failed to create bank",
+            loading: `Creating new bank ${bankCode}...`,
+            success: `Bank ${bankCode} created successfully`,
+            error: `Failed to create bank ${bankCode}`,
           },
         )
         saveLocalStorage(bankCode, role as "bank" | "player")
@@ -96,9 +96,9 @@ export const LobbyView = ({
               ],
             }),
             {
-              loading: `Joining the bank as ${name}...`,
-              success: `Joined the bank as ${name}`,
-              error: `Failed to join the bank as ${name}`,
+              loading: `Joining bank ${bankCode} as ${name}...`,
+              success: `Joined bank ${bankCode} as ${name}`,
+              error: `Failed to join bank ${bankCode} as ${name}`,
             },
           )
           saveLocalStorage(bankCode, role as "bank" | "player", name)
@@ -114,7 +114,7 @@ export const LobbyView = ({
   }
 
   return (
-    <Card className="w-[calc(100%-20px)] max-w-3xl h-full m-4">
+    <Card className="w-full max-w-3xl h-full">
       <Card.Header className="flex flex-row justify-between border-b border-black/50 dark:border-white/50 px-4 sm:px-8">
         <SettingsButton
           bankCode={bankCode}

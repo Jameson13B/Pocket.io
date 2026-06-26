@@ -11,7 +11,7 @@ function App() {
   const [bankCode, setBankCode] = useState<string>("")
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen p-4">
       {view === "lobby" && (
         <LobbyView
           bankCode={bankCode}

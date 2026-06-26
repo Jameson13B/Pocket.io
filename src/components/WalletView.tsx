@@ -41,7 +41,7 @@ export const WalletView = ({
   }, [bankCode, name, role])
 
   return (
-    <Card className="w-[calc(100%-20px)] max-w-3xl h-full m-4">
+    <Card className="flex h-full max-h-[calc(100vh-2rem)] min-h-0 w-full max-w-3xl flex-col overflow-hidden">
       <Card.Header className="flex flex-row justify-between border-b border-black/50 dark:border-white/50 px-4 sm:px-8">
         <SettingsButton bankCode={bankCode} role={role} setView={setView} />
         <div className="flex flex-col items-center justify-center text-center">
@@ -58,18 +58,17 @@ export const WalletView = ({
         />
       </Card.Header>
 
-      <Card.Content className="flex flex-col items-center justify-center px-4">
-        {role !== "bank" && (
-          <>
-            <Badge>
-              <span className="text-xl font-bold">Balance: ${balance}</span>
+      <Card.Content className="flex min-h-0 flex-1 flex-col items-center overflow-hidden px-4">
+        <div className="flex flex-row gap-2 items-center justify-center w-full">
+          {role !== "bank" && (
+            <Badge className="py-1">
+              <span className="text-lg font-bold">Balance: ${balance}</span>
             </Badge>
-            <hr className="w-full my-4 border-black/50 dark:border-white/50" />
-          </>
-        )}
-        <Badge className="py-1" variant="neutral">
-          <span className="text-xl font-bold">Send: ${sendAmount}</span>
-        </Badge>
+          )}
+          <Badge className="py-1" variant="neutral">
+            <span className="text-lg font-bold">Send: ${sendAmount}</span>
+          </Badge>
+        </div>
 
         <Keypad
           balance={balance}
@@ -77,7 +76,7 @@ export const WalletView = ({
           setSendAmount={setSendAmount}
         />
 
-        <hr className="w-full my-5 border-black/50 dark:border-white/50" />
+        <hr className="w-full mt-5 mb-3 border-black/50 dark:border-white/50" />
 
         <TransactionLog id={bankCode} />
       </Card.Content>
