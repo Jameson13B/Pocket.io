@@ -18,6 +18,7 @@ import {
 
 import { SettingsButton } from "@/components/SettingsButton"
 import { db } from "@/firebase"
+import { Star8 } from "./stars/star8"
 
 const saveLocalStorage = (
   bankCode: string,
@@ -114,7 +115,7 @@ export const LobbyView = ({
   }
 
   return (
-    <Card className="w-full max-w-3xl h-full">
+    <Card className="flex h-full max-h-[calc(100vh-2rem)] min-h-0 w-full max-w-3xl flex-col overflow-hidden">
       <Card.Header className="flex flex-row justify-between border-b border-black/50 dark:border-white/50 px-4 sm:px-8">
         <SettingsButton
           bankCode={bankCode}
@@ -140,7 +141,7 @@ export const LobbyView = ({
         </Button>
       </Card.Header>
 
-      <Card.Content className="flex flex-col items-center justify-center px-4">
+      <Card.Content className="relative flex min-h-0 flex-1 flex-col items-center overflow-hidden px-4">
         <div className="grid w-full max-w-[250px] items-center gap-1.5 mb-4">
           <Select value={role} onValueChange={setRole}>
             <SelectTrigger className="w-full max-w-[250px]">
@@ -237,6 +238,16 @@ export const LobbyView = ({
             </div>
           </>
         )}
+
+        <Star8 color="purple" position="bottom-0 right-1" size={75} />
+        <Star8 color="purple" position="bottom-9 right-18" />
+        <Star8 color="purple" position="bottom-20 right-12" size={35} />
+        <Star8 color="purple" position="bottom-[13%] left-[-45px]" size={250} />
+        <Star8
+          color="purple"
+          position="bottom-[45%] left-[45%] z-[-1]"
+          size={350}
+        />
       </Card.Content>
     </Card>
   )

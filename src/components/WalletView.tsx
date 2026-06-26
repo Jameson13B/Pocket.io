@@ -8,6 +8,7 @@ import { SettingsButton } from "@/components/SettingsButton"
 import { SendButton } from "@/components/SendButton"
 import { onSnapshot } from "firebase/firestore"
 import { bankRef } from "@/firebase"
+import { Star8 } from "./stars/star8"
 
 export const WalletView = ({
   bankCode,
@@ -41,7 +42,7 @@ export const WalletView = ({
   }, [bankCode, name, role])
 
   return (
-    <Card className="flex h-full max-h-[calc(100vh-2rem)] min-h-0 w-full max-w-3xl flex-col overflow-hidden">
+    <Card className="relative flex h-full max-h-[calc(100vh-2rem)] min-h-0 w-full max-w-3xl flex-col overflow-hidden">
       <Card.Header className="flex flex-row justify-between border-b border-black/50 dark:border-white/50 px-4 sm:px-8">
         <SettingsButton bankCode={bankCode} role={role} setView={setView} />
         <div className="flex flex-col items-center justify-center text-center">
@@ -79,6 +80,16 @@ export const WalletView = ({
         <hr className="w-full mt-5 mb-3 border-black/50 dark:border-white/50" />
 
         <TransactionLog id={bankCode} />
+
+        <Star8 color="purple" position="bottom-0 right-1" size={75} />
+        <Star8 color="purple" position="bottom-9 right-18" />
+        <Star8 color="purple" position="bottom-20 right-12" size={35} />
+        <Star8 color="purple" position="bottom-[13%] left-[-45px]" size={250} />
+        <Star8
+          color="purple"
+          position="bottom-[45%] left-[45%] z-[-1]"
+          size={350}
+        />
       </Card.Content>
     </Card>
   )
