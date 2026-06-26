@@ -47,6 +47,7 @@ export const SendButton = ({
         const players = snapshot
           .data()
           ?.players.map((player: { name: string }) => player.name)
+          .filter((player: string) => player !== name)
 
         if (role === "player") {
           players.unshift("The Bank")
@@ -56,33 +57,34 @@ export const SendButton = ({
 
       return () => unsub()
     }
-  }, [bankCode, role])
+  }, [bankCode, role, name])
 
   const sendMoney = async () => {
     const bankRef = doc(db, "pocket.io", bankCode)
     const bankDoc = await getDoc(bankRef)
 
-    await updateDoc(bankDoc.ref, {
-      players: bankDoc
-        .data()
-        ?.players?.map((player: { name: string; balance: number }) => {
-          return {
-            ...player,
-            balance:
-              player.name === selectedRecipient
-                ? player.balance + sendAmount
-                : player.balance - sendAmount,
-          }
-        }),
-    })
-
     toast.promise(
-      addDoc(transactionsRef(bankCode), {
-        payee: selectedRecipient,
-        payer: name,
-        amount: sendAmount,
-        createdAt: Timestamp.now(),
-      }),
+      Promise.all([
+        updateDoc(bankDoc.ref, {
+          players: bankDoc
+            .data()
+            ?.players?.map((player: { name: string; balance: number }) => {
+              return {
+                ...player,
+                balance:
+                  player.name === selectedRecipient
+                    ? player.balance + sendAmount
+                    : player.balance - sendAmount,
+              }
+            }),
+        }),
+        addDoc(transactionsRef(bankCode), {
+          payee: selectedRecipient,
+          payer: name,
+          amount: sendAmount,
+          createdAt: Timestamp.now(),
+        }),
+      ]),
       {
         loading: "Sending money...",
         success: "Money sent successfully",

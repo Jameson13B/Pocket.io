@@ -60,9 +60,13 @@ export const LobbyView = ({
       const sameCodeLastRound =
         localStorage.getItem("pocket-io::last-bank-code") === bankCode
 
-      if (bankDoc.exists() && wasBankLastRound && sameCodeLastRound) {
-        toast.info("Resuming existing bank...")
-        setView(role as "bank" | "player")
+      if (bankDoc.exists()) {
+        if (wasBankLastRound && sameCodeLastRound) {
+          toast.info("Resuming existing bank...")
+          setView(role as "bank" | "player")
+        } else {
+          toast.error("Bank code already claimed")
+        }
       } else {
         toast.promise(
           setDoc(bankRef, {
@@ -81,6 +85,8 @@ export const LobbyView = ({
         setView(role as "bank" | "player")
       }
     } else if (role === "player") {
+      const sameNameLastRound =
+        localStorage.getItem("pocket-io::last-name") === name
       const data = bankDoc.data()
       const playerAlreadyExists =
         data?.players?.some(
@@ -89,21 +95,25 @@ export const LobbyView = ({
 
       if (bankDoc.exists()) {
         if (!playerAlreadyExists) {
-          toast.promise(
-            updateDoc(bankDoc.ref, {
-              players: [
-                ...(data?.players ?? []),
-                { name, balance: data?.startingBalance },
-              ],
-            }),
-            {
-              loading: `Joining bank ${bankCode} as ${name}...`,
-              success: `Joined bank ${bankCode} as ${name}`,
-              error: `Failed to join bank ${bankCode} as ${name}`,
-            },
-          )
-          saveLocalStorage(bankCode, role as "bank" | "player", name)
-          setView(role as "bank" | "player")
+          if (sameNameLastRound) {
+            toast.promise(
+              updateDoc(bankDoc.ref, {
+                players: [
+                  ...(data?.players ?? []),
+                  { name, balance: data?.startingBalance },
+                ],
+              }),
+              {
+                loading: `Joining bank ${bankCode} as ${name}...`,
+                success: `Joined bank ${bankCode} as ${name}`,
+                error: `Failed to join bank ${bankCode} as ${name}`,
+              },
+            )
+            saveLocalStorage(bankCode, role as "bank" | "player", name)
+            setView(role as "bank" | "player")
+          } else {
+            toast.error("Name already claimed at this bank")
+          }
         } else {
           toast.info(`Resuming as ${name}...`)
           setView(role as "bank" | "player")
