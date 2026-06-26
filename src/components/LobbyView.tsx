@@ -46,7 +46,7 @@ export const LobbyView = ({
   setRole: (role: "bank" | "player" | "") => void
   setView: (view: "lobby" | "bank" | "player") => void
 }) => {
-  const [startingBalance, setStartingBalance] = useState<number | null>(0)
+  const [startingBalance, setStartingBalance] = useState<number>(0)
   const [billFactor, setBillFactor] = useState<"$1" | "$100" | "$1000">("$1")
 
   const handleGoClick = async () => {
@@ -91,7 +91,7 @@ export const LobbyView = ({
           toast.promise(
             updateDoc(bankDoc.ref, {
               players: [
-                ...data.players,
+                ...(data?.players ?? []),
                 { name, balance: data?.startingBalance },
               ],
             }),
